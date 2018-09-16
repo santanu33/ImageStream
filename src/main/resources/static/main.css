@@ -1,0 +1,16 @@
+.WPyac {
+    width: 32px;
+    height: 77px;
+    margin: 0 5px;
+    position: absolute;
+    z-index: 1;
+}
+.SOS87c {
+    background-color: #3d3d3d;
+    border: 1px solid #191919;
+    border-radius: 2px;
+    cursor: pointer;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
