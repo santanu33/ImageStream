@@ -1,5 +1,5 @@
 var stompClient = null;
-var i = 1;
+
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
@@ -11,7 +11,7 @@ function setConnected(connected) {
     }
     $("#greetings").html("");
 }
-
+var i = 0;
 function connect() {
 	 var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
@@ -19,27 +19,20 @@ function connect() {
         setConnected(true);
 
         stompClient.subscribe('/topic/greetings', function (greeting) {
-        	
-        		var jsonObj = JSON.parse(greeting.body);
-        		console.log(jsonObj.isFirstImage);
-	        	if(jsonObj.bytes!=null){
+	        	if(JSON.parse(greeting.body).bytes!=null){
+	        		//debugger;
+	        		//document.getElementById("ItemPreview_0").src = "data:image/png;base64" + JSON.parse(greeting.body).bytes;
+	        		//document.getElementById("ItemPreview_"+i).src = "/Users/santanu/Downloads/katy/takia_3 copy.jpeg"
+	        		//i = i+1;
 	        		
-	        		if(jsonObj.isFirstImage == "1"){
-	        			debugger;
-	        			i = 1;
-	        		}
-	        		var para = document.createElement("p");
-	        		var node = document.createTextNode(jsonObj.content);
-	        		para.appendChild(node);
-	        		document.body.appendChild(para);
 	        		
-	        		if(i==1){
-	        			document.getElementById("thumbnail").src = "data:image/png;base64," + jsonObj.bytes;
-	        		}
-	        		document.getElementById("ItemPreview_"+i).src = "data:image/png;base64," + jsonObj.bytes;
-	        		//var x = document.createElement("IMG");
+	        		document.getElementById("ItemPreview_"+i).src = "data:image/png;base64," + JSON.parse(greeting.body).bytes;
+	        		var x = document.createElement("IMG");
 	        		i = i+1;
-	        		
+	        		x.id = "ItemPreview_"+i;
+	        		x.style.height = '50px';
+	        	    x.style.width = '50px';
+	        		document.body.appendChild(x);
 	        		
 	        	}
         })
@@ -57,7 +50,6 @@ function disconnect() {
 
 function sendName() {
 	//debugger;
-	
     stompClient.send("/app/hello");
 }
 
@@ -70,16 +62,10 @@ $(function () {
         e.preventDefault();
     });
 	connect();
-    setInterval(sendName,500);
+    setInterval(sendName,4000);
     $( "#connect" ).click(function() { 
     
     });
-    $( "#clean" ).click(function() { 
-    		stompClient.send("/app/clean");
-    });
-    $( "#move" ).click(function() { 
-			stompClient.send("/app/move");
-	});
     $( "#disconnect" ).click(function() { disconnect(); });
     
     $(".imgPreview").on('click', function (e) {

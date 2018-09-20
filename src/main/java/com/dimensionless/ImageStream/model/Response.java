@@ -1,11 +1,19 @@
 package com.dimensionless.ImageStream.model;
 
 
-public class Greeting {
+public class Response {
 
     private String content;
+    private String isFirstImage;
+    public String getIsFirstImage() {
+		return isFirstImage;
+	}
 
-    private byte[] bytes;
+	public void setIsFirstImage(String isFirstImage) {
+		this.isFirstImage = isFirstImage;
+	}
+
+	private byte[] bytes;
     
     
     public byte[] getBytes() {
@@ -20,10 +28,10 @@ public class Greeting {
 		this.content = content;
 	}
 
-	public Greeting() {
+	public Response() {
     }
 
-    public Greeting(String content) {
+    public Response(String content) {
         this.content = content;
     }
 
